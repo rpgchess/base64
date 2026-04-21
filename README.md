@@ -2,31 +2,33 @@
 
 ## 📌 Sobre o Projeto
 
-Utilitário Java para codificação e decodificação Base64. Ferramenta de linha de comando e interface gráfica para converter texto/arquivos entre formato binário e Base64.
+Utilitário Java para codificação e decodificação Base64. Ferramenta de linha de comando para converter texto/arquivos entre formato binário e Base64.
 
 ## 🎯 Objetivo
 
 Fornecer ferramenta simples para:
-- Codificar texto/arquivos em Base64
+
+- Codificar texto em Base64
 - Decodificar strings Base64
 - Suporte a arquivos binários
-- Integração com clipboard
+- Interface de linha de comando (CLI)
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Java** - Linguagem de programação
-- **java.util.Base64** - API nativa de Base64 (Java 8+)
-- **Swing** - Interface gráfica (opcional)
+- **Java 8+** - Linguagem de programação
+- **java.util.Base64** - API nativa de Base64
+- **Maven** - Gerenciamento de dependências e build
 
 ## 📁 Estrutura do Projeto
 
-```
+```tree
 base64/
-├── src/                    # Código-fonte Java
-│   ├── Main.java           # Aplicação CLI
-│   ├── Base64Tool.java     # Lógica de codificação
-│   ├── GUI.java            # Interface gráfica (opcional)
-│   └── ...                 # Outros arquivos
+├── src/
+│   └── br/base64/
+│       └── CBase64.java       # Aplicação CLI
+├── pom.xml                    # Maven configuration
+├── .editorconfig              # Editor configuration
+├── .gitignore
 └── README.md
 ```
 
@@ -44,9 +46,80 @@ base64/
 - ✅ Base64 para texto
 - ✅ Base64 para arquivo binário
 - ✅ Validação de formato
-- ✅ Tratamento de erros
+- ✅ Tratamento de erros robusto
 
-### Recursos Adicionais
+## 💻 Como Usar
+
+### Pré-requisitos
+
+- **Java 8+** instalado
+- **Maven 3.6+** instalado (opcional, para build)
+
+### Compilar o Projeto
+
+```bash
+# Com Maven
+mvn clean compile
+
+# Sem Maven (compilação direta)
+javac -d target/classes -encoding UTF-8 src/br/base64/CBase64.java
+```
+
+### Executar
+
+```bash
+# Codificar texto
+java -cp target/classes br.base64.CBase64 -e "Claudio Almeida"
+
+# Decodificar texto
+java -cp target/classes br.base64.CBase64 -d "Q2xhdWRpbyBBbG1laWRh"
+
+# Codificar arquivo
+java -cp target/classes br.base64.CBase64 -ef image.png > image.txt
+
+# Decodificar arquivo
+java -cp target/classes br.base64.CBase64 -df image.txt > image_restored.png
+
+# Ver ajuda
+java -cp target/classes br.base64.CBase64 --help
+```
+
+### Gerar JAR executável
+
+```bash
+mvn clean package
+
+# Executar o JAR
+java -jar target/base64-tool-1.0.0.jar -e "Hello World"
+```
+
+## 📝 Opções de Linha de Comando
+
+```bash
+-e, --encode [string]      Codifica o texto para Base64
+-d, --decode [string]      Decodifica Base64 para texto
+-ef, --encode-file [path]  Codifica arquivo para Base64
+-df, --decode-file [path]  Decodifica Base64 de arquivo
+-h, --help                 Mostra mensagem de ajuda
+```
+
+## 🧪 Exemplos Práticos
+
+```bash
+# Codificar mensagem simples
+$ java -jar target/base64-tool-1.0.0.jar -e "Hello World"
+SGVsbG8gV29ybGQ=
+
+# Decodificar mensagem
+$ java -jar target/base64-tool-1.0.0.jar -d "SGVsbG8gV29ybGQ="
+Hello World
+
+# Codificar imagem
+$ java -jar target/base64-tool-1.0.0.jar -ef photo.jpg > photo.b64
+
+# Decodificar imagem
+$ java -jar target/base64-tool-1.0.0.jar -df photo.b64 > photo_restored.jpg
+```
 
 - ✅ Interface CLI
 - ✅ Interface GUI (Swing)
@@ -232,7 +305,7 @@ public class Main {
 
 ### Exemplo
 
-```
+```output
 Texto:   Hello!
 Bytes:   48 65 6c 6c 6f 21
 Binário: 01001000 01100101 01101100 01101100 01101111 00100001
@@ -249,7 +322,7 @@ Base64:  SGVsbG8h
 
 ### 2. HTTP Basic Authentication
 
-```
+```api
 Authorization: Basic dXNlcjpwYXNzd29yZA==
 ```
 
@@ -264,7 +337,7 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
 
 ### 4. Email (MIME)
 
-```
+```base64
 Content-Transfer-Encoding: base64
 
 SGVsbG8sIFdvcmxkIQ==
@@ -294,6 +367,4 @@ Projeto de utilitário público.
 ---
 
 > **Dica**: Para criptografia real, use bibliotecas como Bouncy Castle, JCE, ou Jasypt.
-
-
 > Codificador e Decodificador de Base64 para String feito em Java
